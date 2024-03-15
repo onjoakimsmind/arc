@@ -1,0 +1,24 @@
+{
+    "name": "onjoakimsmind/arc",
+    "description": "CMS Package for Laravel",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Onjoakimsmind\\Arc\\": "src"
+        },
+        "files": [
+            "src/helpes.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "onjoakimsmind",
+            "email": "joakim@stenberg.uk"
+        }
+    ],
+    "require": {
+        "illuminate/support": "^10.48",
+        "illuminate/database": "^10.38",
+        "illuminate/http": "^10.48"
+    }
+}
