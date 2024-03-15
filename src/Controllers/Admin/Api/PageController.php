@@ -6,10 +6,22 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
+use Onjoakimsmind\Arc\Helpers\Helper;
+
 use Onjoakimsmind\Arc\Models\Page;
+use Onjoakimsmind\Arc\Models\Theme;
 
 class PageController extends Controller
 {
+    protected $theme;
+    protected $helper;
+
+    public function __construct()
+    {
+        $this->theme = Theme::where('active', 1)->first();
+        $this->helper = new Helper();
+    }
+
     public function show(string $slug = 'home')
     {
         $page = Page::where('slug', $slug)->first();
@@ -19,10 +31,18 @@ class PageController extends Controller
     public function getHTML(string $slug = 'home')
     {
         $page = Page::where('slug', $slug)->first();
-        $html = view('arc::partials.header', ['page' => $page])->render();
-        $html .= objToHTML(json_decode($page->content, true));
-        $html .= view('arc::partials.footer', ['page' => $page])->render();
-        return response()->json(['html' => $html]);
+        /* $css = $page->style;
+        $title = $page->title;
+        $slug = $page->slug;
+        $html = view("{$this->theme->name}::partials.header", [
+            'css' => $css,
+            'title' => $title,
+            'slug' => $slug
+        ])->render(); */
+        $html = $this->helper->objToHTML($page->content);/*
+        $html .= view("{$this->theme->name}::partials.footer")->render(); */
+
+        return response($html, 200)->header('Content-Type', 'text/css');
     }
 
     public function getCSS(string $slug = 'home')
@@ -39,15 +59,38 @@ class PageController extends Controller
         return response()->json(['html' => $content]);
     }
 
+    public function get(Request $request, string $slug)
+    {
+        $page = Page::where('slug', $slug)->first();
+        $response = [
+            'pages' => $page->temp_html,
+            'styles' => $page->temp_style
+        ];
+
+        return response()->json($response);
+    }
+
     public function update(Request $request, string $slug)
     {
         $page = Page::where('slug', $slug)->first();
+
         $html = $request->input('html');
-        $parsed = htmlToObj($html);
-        $page->content = $parsed;
-        $page->style = $request->input('css');
+        $styles = $request->input('styles');
+        $pages = $request->input('pages');
+
+        if($html) {
+            $parsed = $this->helper->htmlToObj($html);
+            $page->content = $parsed;
+            $page->style = $request->input('css');
+        }
+
+        if($pages && $styles) {
+            $page->temp_html = $pages;
+            $page->temp_style = $styles;
+        }
 
         $page->save();
+
         return response()->json(['msg' => 'Ok', 'page' => $page]);
     }
 

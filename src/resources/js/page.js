@@ -18,10 +18,23 @@ import grapesjsTouch from 'grapesjs-touch';
 import grapesjsTuiImageEditor from 'grapesjs-tui-image-editor';
 import grapesjsTyped from 'grapesjs-typed';
 
+
 const editor = grapesjs.init({
   height: '100vh',
   container: '#gjs',
-
+  components: '<h1>Welcome</h1>',
+  storageManager: {
+    type: 'remote',
+    stepsBeforeSave: 1,
+    options: {
+      remote: {
+        urlLoad: `/api/admin/pages/${slug}`,
+        urlStore: `/api/admin/pages/${slug}`,
+        onStore: (data) => { console.log(data) },
+        onLoad: (result) => { console.log(result) }
+      }
+    }
+  },
   showOffsets: true,
   assetManager: {
     embedAsBase64: true,
@@ -356,7 +369,7 @@ pn.addButton('options', {
   id: 'save-btn',
   className: 'mdi mdi-content-save',
   command: async () => {
-    const response = await axios.put(`/api/admin/pages/${slug}`, {
+    const response = await axios.post(`/api/admin/pages/${slug}`, {
       html: editor.getHtml(),
       css: editor.getCss()
     });

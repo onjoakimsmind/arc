@@ -15,6 +15,13 @@ mix
     },
     devServer: {
       server: 'https',
+      port: '8079'
+    }
+  })
+  .options({
+    hmrOptions: {
+      host: 'localhost',
+      port: '8079'
     }
   })
   .copy('public', '../../../public/vendor/arc')

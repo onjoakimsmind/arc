@@ -6,7 +6,7 @@ use Onjoakimsmind\Arc\Controllers\Admin\PageController;
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', function () {
-        return view('admin::dashboard');
+        return view('admin::pages.dashboard');
     })->name('admin.dashboard');
     Route::group(['prefix' => 'pages'], function () {
         Route::get('/', [PageController::class, 'index'])->name('admin.pages.index');

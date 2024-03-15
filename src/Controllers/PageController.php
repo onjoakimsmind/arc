@@ -15,10 +15,12 @@ use Onjoakimsmind\Arc\Models\Theme;
 class PageController extends Controller
 {
     protected $helper;
+    protected $theme;
 
     public function __construct()
     {
         $this->helper = new Helper();
+        $this->theme = Theme::where('active', 1)->first();
     }
 
     public function show(string $slug = null)
@@ -35,7 +37,7 @@ class PageController extends Controller
         $title = $page->title;
         $slug = $page->slug;
 
-        return view('arc::page', [
+        return view("{$this->theme->name}::page", [
             'html' => $html,
             'css' => $css,
             'title' => $title,

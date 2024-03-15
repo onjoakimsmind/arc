@@ -7,9 +7,9 @@ use DOMElement;
 
 class Helper
 {
-    public function htmlToObj(string $html): string
+    public function htmlToObj(string $html): array
     {
-        $dom = new \OMDocument();
+        $dom = new DOMDocument();
         $dom->loadHTML($html);
         return $this->elementToObj($dom->documentElement);
     }
