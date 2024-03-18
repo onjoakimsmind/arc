@@ -31,7 +31,7 @@ const editor = grapesjs.init({
         urlLoad: `/api/admin/pages/${slug}`,
         urlStore: `/api/admin/pages/${slug}`,
         onStore: (data) => { console.log(data) },
-        onLoad: (result) => { console.log(result) }
+        onLoad: (result) => { data || {} }
       }
     }
   },

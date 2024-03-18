@@ -71067,6 +71067,23 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 var editor = grapesjs__WEBPACK_IMPORTED_MODULE_16__["default"].init({
   height: '100vh',
   container: '#gjs',
+  components: '<h1>Welcome</h1>',
+  storageManager: {
+    type: 'remote',
+    stepsBeforeSave: 1,
+    options: {
+      remote: {
+        urlLoad: "/api/admin/pages/".concat(slug),
+        urlStore: "/api/admin/pages/".concat(slug),
+        onStore: function onStore(data) {
+          console.log(data);
+        },
+        onLoad: function onLoad(result) {
+          console.log(result);
+        }
+      }
+    }
+  },
   showOffsets: true,
   assetManager: {
     embedAsBase64: true
@@ -71373,7 +71390,7 @@ pn.addButton('options', {
         while (1) switch (_context.prev = _context.next) {
           case 0:
             _context.next = 2;
-            return axios__WEBPACK_IMPORTED_MODULE_17__["default"].put("/api/admin/pages/".concat(slug), {
+            return axios__WEBPACK_IMPORTED_MODULE_17__["default"].post("/api/admin/pages/".concat(slug), {
               html: editor.getHtml(),
               css: editor.getCss()
             });

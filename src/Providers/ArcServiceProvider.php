@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Filesystem\Filesystem;
 
 use Onjoakimsmind\Arc\Console\ArcCommand;
 use Onjoakimsmind\Arc\Models\Theme;
@@ -33,9 +34,9 @@ class ArcServiceProvider extends ServiceProvider
         }
 
         Config::set('view.paths', [resource_path('themes/'.$this->theme->name.'/views')]);
-        /* if ($this->app->runningInConsole()) {
+        if ($this->app->runningInConsole()) {
             $this->registerPublishing();
-        } */
+        }
 
         $this->registerResources();
 
@@ -60,6 +61,9 @@ class ArcServiceProvider extends ServiceProvider
      */
     protected function registerPublishing()
     {
+        $this->publishes([
+            __DIR__.'/../database/migrations' => database_path('migrations'),
+        ], 'arc-migrations');
         $this->publishes([
             __DIR__.'/../database/migrations' => database_path('migrations'),
         ], 'arc-migrations');

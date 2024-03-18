@@ -3,10 +3,10 @@ let path = require('path')
 let tailwindcss = require('tailwindcss')
 
 mix
-  .js('src/resources/js/app.js', 'public/app.js')
-  .js('src/resources/js/page.js', 'public/page.js')
   .setPublicPath('public')
-  .postCss('src/resources/css/app.css', 'dist', [tailwindcss('tailwind.config.js')])
+  .js('src/resources/js/app.js', './public/app.js')
+  .js('src/resources/js/page.js', './public/page.js')
+  .postCss('src/resources/css/app.css', './public/dist', [tailwindcss('tailwind.config.js')])
   .webpackConfig({
     resolve: {
       alias: {
@@ -25,4 +25,4 @@ mix
     }
   })
   .copy('public', '../../../public/vendor/arc')
-  .version()
+//.version()
