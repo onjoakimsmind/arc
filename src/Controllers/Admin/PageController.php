@@ -15,9 +15,9 @@ class PageController extends Controller
         return view('admin::pages.pages.index', ['pages' => $pages]);
     }
 
-    public function show(string $slug = 'home')
+    public function show(string $id)
     {
-        $page = Page::where('slug', $slug)->first();
+        $page = Page::find($id);
         return view('admin::pages.pages.edit', ['page' => $page]);
     }
 

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Filesystem\Filesystem;
 
@@ -27,10 +28,11 @@ class ArcServiceProvider extends ServiceProvider
         if(!$theme) {
             $theme = Theme::create(['name' => 'Arc', 'active' => 1]);
         } */
-
-        $this->theme = Theme::where('active', 1)->first();
-        if(!$this->theme) {
-            $this->theme = Theme::create(['name' => 'Arc', 'active' => 1]);
+        if(Schema::hasTable('themes')) {
+            $this->theme = Theme::where('active', 1)->first();
+            if(!$this->theme) {
+                $this->theme = Theme::create(['name' => 'Arc', 'active' => 1]);
+            }
         }
 
         Config::set('view.paths', [resource_path('themes/'.$this->theme->name.'/views')]);
@@ -40,8 +42,8 @@ class ArcServiceProvider extends ServiceProvider
 
         $this->registerResources();
 
-        Blade::componentNamespace('Onjoakimsmind\\Arc\\View\\Components', 'arc');
-        Blade::componentNamespace("Themes\\{$this->theme->name}\\View\\Components", $this->theme->name);
+        Blade::componentNamespace('Onjoakimsmind\\Arc\\View\\Components', 'admin');
+        //Blade::componentNamespace("Themes\\{$this->theme->name}\\View\\Components", $this->theme->name);
     }
 
     /**
@@ -61,9 +63,6 @@ class ArcServiceProvider extends ServiceProvider
      */
     protected function registerPublishing()
     {
-        $this->publishes([
-            __DIR__.'/../database/migrations' => database_path('migrations'),
-        ], 'arc-migrations');
         $this->publishes([
             __DIR__.'/../database/migrations' => database_path('migrations'),
         ], 'arc-migrations');

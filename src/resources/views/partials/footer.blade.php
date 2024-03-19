@@ -5,7 +5,7 @@
 <script src="{{ mix('app.js', 'vendor/arc') }}"></script>
 @if (request()->is('admin/pages/*'))
     <script>
-        const slug = '{{ $page->slug }}';
+        const pageId = '{{ $page->id }}';
     </script>
     <script src="{{ mix('page.js', 'vendor/arc') }}"></script>
 @endif

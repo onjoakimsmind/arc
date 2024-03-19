@@ -19,8 +19,12 @@
     <div class="flex h-screen bg-gray-100">
         <!-- sidebar -->
         {{-- @include('admin::components.sidebar') --}}
-        <x-arc::sidebar />
-        <div class="flex flex-col flex-1 overflow-y-auto">
+        <x-admin::Sidebar />
+        <div class="flex flex-1 flex-col overflow-y-auto">
+
             @if (!request()->is('admin/pages/*'))
-                <x-arc::search />
+                <x-admin::search />
+            @endif
+            @if (request()->is('admin/pages/*'))
+                <x-admin::PageControl id="{{ request()->segment(3) }}" />
             @endif

@@ -19,6 +19,25 @@ import grapesjsTuiImageEditor from 'grapesjs-tui-image-editor';
 import grapesjsTyped from 'grapesjs-typed';
 
 
+const getCss = async () => {
+  try {
+    const response = await axios.get('http://127.0.0.1:5173/css/app.css', {
+      headers: {
+        'Accept': 'text/css'
+      }
+    });
+    return response.data;
+  } catch (e) {
+    console.log(e)
+    try {
+      const response = await axios.get('/build/manifest.json');
+      return `/build/${response.data["css/app.css"].file}`;
+    } catch (e) {
+      return '';
+    }
+  }
+}
+
 const editor = grapesjs.init({
   height: '100vh',
   container: '#gjs',
@@ -28,10 +47,8 @@ const editor = grapesjs.init({
     stepsBeforeSave: 1,
     options: {
       remote: {
-        urlLoad: `/api/admin/pages/${slug}`,
-        urlStore: `/api/admin/pages/${slug}`,
-        onStore: (data) => { console.log(data) },
-        onLoad: (result) => { data || {} }
+        urlLoad: `/api/admin/pages/${pageId}/revisions/latest`,
+        urlStore: `/api/admin/pages/${pageId}/revisions`,
       }
     }
   },
@@ -42,7 +59,8 @@ const editor = grapesjs.init({
   selectorManager: { componentFirst: true },
   canvas: {
     styles: [
-      `/api/admin/pages/${slug}/css`
+      `/api/admin/pages/${pageId}/css`,
+      'http://127.0.0.1:5173/css/app.css'
     ]
   },
   styleManager: {
@@ -369,9 +387,9 @@ pn.addButton('options', {
   id: 'save-btn',
   className: 'mdi mdi-content-save',
   command: async () => {
-    const response = await axios.post(`/api/admin/pages/${slug}`, {
+    const response = await axios.post(`/api/admin/pages/${pageId}`, {
       html: editor.getHtml(),
-      css: editor.getCss()
+      styles: editor.getCss()
     });
 
     console.log(response.data);
@@ -404,3 +422,14 @@ for (var i = 0; i < titles.length; i++) {
   el.setAttribute('data-tooltip', title);
   el.setAttribute('title', '');
 }
+
+document.querySelector('#publish').addEventListener('click', async () => {
+  const response = await axios.post(`/api/admin/pages/${pageId}`, {
+    html: editor.getHtml(),
+    styles: editor.getCss()
+  });
+
+  if (response.status === 200) {
+    window.location.href = `/admin/pages/`;
+  }
+});
