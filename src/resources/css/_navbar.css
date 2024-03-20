@@ -1,0 +1,104 @@
+@layer components {
+
+  .navbar,
+  .navbar-menu,
+  .navbar-start,
+  .navbar-end {
+    @apply lg:flex lg:items-stretch;
+  }
+
+  .navbar {
+    @apply fixed left-0 right-0 top-0 z-30 flex h-14 w-screen border-b border-gray-100 bg-white transition-all lg:w-auto lg:pl-60;
+  }
+
+  .navbar-brand {
+    @apply flex h-14 flex-1 items-stretch;
+  }
+
+  .navbar-brand.is-right {
+    @apply flex-none lg:hidden;
+  }
+
+  .navbar-brand .navbar-item {
+    @apply flex items-center;
+  }
+
+  .navbar-item,
+  .navbar-link {
+    @apply block px-3 py-2;
+  }
+
+  .navbar-item {
+    @apply relative flex-shrink-0 flex-grow-0 lg:flex lg:items-center;
+  }
+
+  .navbar-item.mobile-aside-button {
+    @apply lg:hidden;
+  }
+
+  .navbar-item.has-divider {
+    @apply lg:border-r lg:border-gray-100;
+  }
+
+  .navbar-item>.navbar-link {
+    @apply bg-gray-100 lg:bg-transparent;
+  }
+
+  .navbar-item .icon+span {
+    @apply ml-2;
+  }
+
+  .navbar-item.has-user-avatar>.navbar-link {
+    @apply flex items-center;
+  }
+
+  .navbar-item.has-user-avatar .user-avatar {
+    @apply mr-3 inline-flex h-6 w-6;
+  }
+
+  .navbar-item.dropdown {
+    @apply p-0 lg:px-3 lg:py-2;
+  }
+
+  .navbar-item.dropdown>.navbar-link .icon:last-child {
+    @apply hidden lg:inline-flex;
+  }
+
+  .navbar-item.desktop-icon-only {
+    @apply lg:w-16 lg:justify-center;
+  }
+
+  .navbar-item.desktop-icon-only span:last-child {
+    @apply lg:hidden;
+  }
+
+  .navbar-item .input {
+    @apply border-0;
+  }
+
+  .navbar-menu {
+    max-height: calc(100vh - 3.5rem);
+    @apply absolute left-0 top-14 hidden w-screen overflow-auto border-b border-gray-100 bg-white shadow lg:static lg:flex lg:flex-grow lg:overflow-visible lg:border-b-0 lg:shadow-none;
+  }
+
+  .navbar-menu.active {
+    @apply block;
+  }
+
+  .navbar-end {
+    @apply lg:ml-auto lg:justify-end;
+  }
+
+  .navbar-item .navbar-dropdown {
+    @apply text-sm lg:absolute lg:left-0 lg:top-full lg:z-20 lg:min-w-full lg:rounded-b lg:border-t-2 lg:border-gray-200 lg:bg-white lg:shadow-md;
+  }
+
+  .navbar-item:not(.active) .navbar-dropdown {
+    @apply lg:hidden;
+  }
+
+  .navbar-item.active:not(.dropdown),
+  .navbar-item.active.dropdown>.navbar-link {
+    @apply text-blue-500;
+  }
+}

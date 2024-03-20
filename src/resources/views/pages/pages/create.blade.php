@@ -1,3 +1,4 @@
 @include('admin::partials.header')
-<x-Arc::test />
+<div id="gjs">
+</div>
 @include('admin::partials.footer')

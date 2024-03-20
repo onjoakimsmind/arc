@@ -23,6 +23,11 @@ class PageController extends Controller
 
     public function create()
     {
-        return view('admin::pages.pages.create');
+        $page = Page::create([
+            'title' => 'New Page',
+            'slug' => 'new-page',
+        ]);
+
+        return redirect()->route('admin::pages.pages.edit', ['id' => $page->id]);
     }
 }

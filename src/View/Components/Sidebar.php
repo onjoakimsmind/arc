@@ -20,17 +20,26 @@ class Sidebar extends Component
     public function render(): View
     {
         $items = [
-            'Dashboard' => [
-                'icon' => 'mdi mdi-view-dashboard',
-                'route' => 'admin.dashboard',
+            'General' => [
+                'children' => [
+                    'Dashboard' => [
+                        'icon' => 'mdi mdi-view-dashboard',
+                        'route' => 'admin.dashboard',
+                    ],
+                ]
+
             ],
             'Pages' => [
-                'icon' => 'mdi mdi-file-multiple',
-                'route' => 'admin.pages.index',
-            ],
-            'Settings' => [
-                'icon' => 'mdi mdi-cog',
-                'route' => 'admin.settings',
+                'children' => [
+                    'All' => [
+                        'icon' => 'mdi mdi-file-multiple',
+                        'route' => 'admin.pages.index',
+                    ],
+                    'New' => [
+                        'icon' => 'mdi mdi-plus',
+                        'route' => 'admin.pages.create',
+                    ],
+                ]
             ]
         ];
         return view('admin::components.sidebar', [

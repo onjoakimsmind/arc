@@ -1,10 +1,10 @@
 {
     "/app.js": "/app.js",
     "/page.js": "/page.js",
-    "/dist/app.css": "/dist/app.css",
     "/public/vendor/arc/app.js": "/public/vendor/arc/app.js",
     "/public/vendor/arc/dist/app.css": "/public/vendor/arc/dist/app.css",
     "/public/vendor/arc/hot": "/public/vendor/arc/hot",
     "/public/vendor/arc/mix-manifest.json": "/public/vendor/arc/mix-manifest.json",
-    "/public/vendor/arc/page.js": "/public/vendor/arc/page.js"
+    "/public/vendor/arc/page.js": "/public/vendor/arc/page.js",
+    "/dist/app.css": "/dist/app.css"
 }

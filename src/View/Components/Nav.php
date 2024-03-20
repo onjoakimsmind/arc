@@ -5,7 +5,7 @@ namespace Onjoakimsmind\Arc\View\Components;
 use Illuminate\View\Component;
 use Illuminate\View\View;
 
-class Search extends Component
+class Nav extends Component
 {
     /**
      * Create the component instance.
@@ -19,6 +19,6 @@ class Search extends Component
      */
     public function render(): View
     {
-        return view('admin::components.search');
+        return view('admin::components.nav');
     }
 }
